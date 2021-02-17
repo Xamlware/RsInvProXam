@@ -12,7 +12,7 @@ namespace RsInvPro.Services
         private const bool ForceDesignData = false;
         public const string MainPage = "MainPage";
         public const string InventoryPage = "InventoryPage";
-        public const string InventoryColumnsPage = "InventoryColumnsPage";
+        public const string InventoryColumnPage = "InventoryColumnPage";
 
 
 
