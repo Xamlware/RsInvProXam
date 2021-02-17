@@ -13,10 +13,10 @@ namespace RsInvPro.Views
             InitializeComponent();
             this.BindingContext = vm;
 
-            NavigateButton.Clicked += (s, e) =>
-            {
-                vm.InventoryPageCommand.Execute(new object());
-            };
+            //NavigateButton.Clicked += (s, e) =>
+            //{
+            //    vm.InventoryPageCommand.Execute(new object());
+            //};
         }
     }
 }

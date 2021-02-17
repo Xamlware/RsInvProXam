@@ -12,7 +12,21 @@ namespace RsInvPro.ViewModels
     {
         private readonly INavigationService _navService;
 
-        public RelayCommand inventoryPageCommand { get; private set; }
+        private RelayCommand inventoryPageCommand;
+        public RelayCommand InventoryPageCommand
+        {
+            get { return inventoryPageCommand; }
+            protected set { inventoryPageCommand = value; }
+
+            //get
+            //{
+            //    return inventoryPageCommand
+            //           ?? (inventoryPageCommand = new RelayCommand(
+
+            //                  () => ExecuteInventoryPageCommnd(),
+            //                  () => CanExecuteInventoryPageCommnd()));
+            //}
+        }
 
         public string HelloWorldString { get; private set; } = "Hello from Xamarin Forms";
 
@@ -20,24 +34,24 @@ namespace RsInvPro.ViewModels
 
         public MainViewModel(INavigationService navService)
         {
-            //InventoryPageCommand = new RelayCommand(
-            //   () => ExecuteInventoryPageCommnd(),
-            //   () => CanExecuteInventoryPageCommnd());
+            InventoryPageCommand = new RelayCommand(
+               () => ExecuteInventoryPageCommnd(),
+               () => CanExecuteInventoryPageCommnd());
 
             _navService = navService;
         }
 
-        public RelayCommand InventoryPageCommand
-        {
-            get
-            {
-                return inventoryPageCommand
-                       ?? (inventoryPageCommand = new RelayCommand(
+        //public RelayCommand InventoryPageCommand
+        //{
+        //    get
+        //    {
+        //        return inventoryPageCommand
+        //               ?? (inventoryPageCommand = new RelayCommand(
 
-                              () => ExecuteInventoryPageCommnd(),
-                              () => CanExecuteInventoryPageCommnd()));
-            }
-        }
+        //                      () => ExecuteInventoryPageCommnd(),
+        //                      () => CanExecuteInventoryPageCommnd()));
+        //    }
+        //}
 
         private bool CanExecuteInventoryPageCommnd()
         {

@@ -9,6 +9,6 @@
 
 <StackLayout>
     <Label Text="{Binding HelloWorldString}"></Label>
-    <Button x:Name="NavigateButton" Text="Inventory" BackgroundColor="lIghtGray"></Button>
+    <Button Command="{Binding InventoryPageCommand}" Text="Inventory" BackgroundColor="lIghtGray"></Button>
 </StackLayout>
 </ContentPage>
