@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿
 using Foundation;
 using UIKit;
 
@@ -22,7 +19,13 @@ namespace RsInvPro.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzk5Njc2QDMxMzgyZTM0MmUzMGVKYy9WMUNnYlF4MWc5T0FWTG0vcVFydmplcXcxSW1KNkRVb2x3bFVTbFE9");
+
+            //SQLitePCL.Batteries_V2.Init();
             global::Xamarin.Forms.Forms.Init();
+            Syncfusion.SfDataGrid.XForms.iOS.SfDataGridRenderer.Init();
+            Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

@@ -14,6 +14,8 @@ namespace RsInvPro.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mzk5Njc2QDMxMzgyZTM0MmUzMGVKYy9WMUNnYlF4MWc5T0FWTG0vcVFydmplcXcxSW1KNkRVb2x3bFVTbFE9");
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -21,6 +23,7 @@ namespace RsInvPro.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

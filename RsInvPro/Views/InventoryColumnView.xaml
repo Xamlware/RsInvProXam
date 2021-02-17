@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              x:Class="RsInvPro.Views.InventoryColumnView">
+             xmlns:tv="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+             x:Class="RsInvPro.Views.InventoryColumnView">
 
-
-    <!--xmlns:tv="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"-->
             
     <ContentPage.BindingContext>
         <Binding Path="InventoryColumnsViewModel" Source="{StaticResource Locator}" />
@@ -16,23 +15,26 @@
         <StackLayout>
             <Label Text="{Binding ColumnHeader}"></Label>
 
-            <!--<tv:SfTabView BackgroundColor="Aqua">
-                    <tv:SfTabItem Title="Call">
-                        <tv:SfTabItem.Content>
-                            <Grid BackgroundColor="Red" x:Name="AllContactsGrid" />
-                        </tv:SfTabItem.Content>
-                    </tv:SfTabItem>
-                    <tv:SfTabItem Title="Favorites">
-                        <tv:SfTabItem.Content>
-                            <Grid BackgroundColor="Green" x:Name="FavoritesGrid" />
-                        </tv:SfTabItem.Content>
-                    </tv:SfTabItem>
-                    <tv:SfTabItem Title="Contacts">
-                        <tv:SfTabItem.Content>
-                            <Grid BackgroundColor="Blue" x:Name="ContactsGrid" />
-                        </tv:SfTabItem.Content>
-                    </tv:SfTabItem>
-            </tv:SfTabView>-->
+            <tv:SfTabView BackgroundColor="LightGray">
+
+                <tv:SfTabItem Title="Inventory">
+                    <tv:SfTabItem.Content>
+                        <Grid BackgroundColor="Red" x:Name="AllContactsGrid" />
+                    </tv:SfTabItem.Content>
+                </tv:SfTabItem>
+
+                <tv:SfTabItem Title="Inventory Item">
+                    <tv:SfTabItem.Content>
+                        <Grid BackgroundColor="Green" x:Name="FavoritesGrid" />
+                    </tv:SfTabItem.Content>
+                </tv:SfTabItem>
+
+                <tv:SfTabItem Title="InventoryEbay">
+                    <tv:SfTabItem.Content>
+                        <Grid BackgroundColor="Blue" x:Name="ContactsGrid" />
+                    </tv:SfTabItem.Content>
+                </tv:SfTabItem>
+            </tv:SfTabView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
