@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RsInvPro.Views.InventoryView">
+
+    <!--xmlns:sf="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"--> 
+             
+    <ContentPage.BindingContext>
+        <Binding Path="InventoryViewModel" Source="{StaticResource Locator}" />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding InventoryHeader}"></Label>
+
+            <!--<sf:SfDataGrid
+                x:Name="dataGrid"
+                ColumnSizer="Star"
+                AutoGenerateColumns="False"
+                ScrollingMode="Line"
+                ItemsSource="{Binding InventoryList}">
+
+                <sf:SfDataGrid.Columns x:TypeArguments="sf:Columns">
+                    <sf:GridTextColumn 
+                        HeaderText="Inventory ID"
+                        MappingName="PK_Inventory"
+                        IsHidden="{Binding IsInventoryIdHidden}"/>
+                    <sf:GridTextColumn
+                        HeaderText="Item Name"
+                        MappingName="ItemName" 
+                       IsHidden="{Binding IsInventoryNameHidden}"/>
+                     <sf:GridTextColumn
+                        HeaderText="Item SKU"
+                        MappingName="ItemSku"
+                        IsHidden="{Binding IsInventorySkuHidden}"/>
+ 
+                </sf:SfDataGrid.Columns>
+            </sf:SfDataGrid>-->
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
