@@ -1,0 +1,10 @@
+﻿ItemId
+PurchaseDate
+ItemName
+Department
+Category
+SubCategory
+Brand
+SKU
+Location
+PurchasePrice

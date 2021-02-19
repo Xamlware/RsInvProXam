@@ -2,11 +2,14 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using Newtonsoft.Json;
 using RsInvPro.Data.Entities;
 using RsInvPro.DataServices;
+using RsInvPro.Helpers;
 using RsInvPro.Services.DataServices;
+using Syncfusion.SfDataGrid.XForms;
 
 namespace RsInvPro.ViewModels
 {
@@ -15,6 +18,17 @@ namespace RsInvPro.ViewModels
 		private readonly INavigationService _navService;
 		private readonly IDataService<Inventory> _ds;
 		public static bool IsDesignModeEnabled { get; }
+
+		#region Commands
+
+			private RelayCommand<GridSelectionChangedEventArgs> selectionCommand;
+			public RelayCommand<GridSelectionChangedEventArgs> SelectionCommand
+			{
+				get { return selectionCommand; }
+				protected set { selectionCommand = value; }
+			}
+
+		#endregion
 
 		#region Properties
 		public const string InventoryHeaderProperty = "InventoryHeaderProperty";
@@ -48,6 +62,35 @@ namespace RsInvPro.ViewModels
 			}
 		}
 
+		public const string SelectedItemProperty = "SelectedItemProperty";
+		private ObservableCollection<Inventory> _selectedItem;
+		public ObservableCollection<Inventory> SelectedItem
+		{
+			get
+			{
+				return _selectedItem;
+			}
+			set
+			{
+				_selectedItem = value;
+				this.RaisePropertyChanged(SelectedItemProperty);
+			}
+		}
+
+		public const string SelectedIndexProperty = "SelectedIndexProperty";
+		private ObservableCollection<Inventory> _selectedIndex;
+		public ObservableCollection<Inventory> SelectedIndex
+		{
+			get
+			{
+				return _selectedIndex;
+			}
+			set
+			{
+				_selectedIndex = value;
+				this.RaisePropertyChanged(SelectedIndexProperty);
+			}
+		}
 
 		#region Hiding colums definition
 
@@ -106,17 +149,39 @@ namespace RsInvPro.ViewModels
 			_ds = ds;
 			this.InventoryList = this.GetInventoryList();
 			this.InventoryHeader = "Hello from our inventory page";
-			this.IsInventoryIdHidden = true;
-			this.IsInventoryNameidden = true;
+			this.IsInventoryIdHidden = false;
+			this.IsInventoryNameidden = false;
 			this.IsInventorySkuHidden = false;
+
+			SelectionCommand = new RelayCommand<GridSelectionChangedEventArgs>(i => ExecuteSelectionCommnd(i));
+
+		}
+
+        private void ExecuteSelectionCommnd(GridSelectionChangedEventArgs e)
+        {
+			this.SelectedItem = (ObservableCollection<Inventory>) e.AddedItems;
+
 		}
 
 		public ObservableCollection<Inventory> GetInventoryList()
 		{
 
 			//return _ds.GetTableList(IsDesignModeEnabled, inventory, "Get", "api/district/");
-			return _ds.GetSqlTableList(new Inventory(), null);
+			return _ds.GetSqlTableList(new Inventory(), null, true).ToCollection();
 
 		}
 	}
 }
+
+
+//private ICommand selectionCommand;
+//public ICommand SelectionCommand
+//{
+//	get { return selectionCommand; }
+//	set { selectionCommand = value; }
+//}
+//public ViewModel()
+//{
+//	selectionCommand = new Command<GridSelectionChangedEventArgs>(OnSelectionChanged);
+
+		 

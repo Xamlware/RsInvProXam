@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace RsInvPro.Services.DataServices
@@ -8,6 +9,6 @@ namespace RsInvPro.Services.DataServices
 		T UpdateTable<T>(bool isDesign, T t, string method, string route, int? id) where T : class;
 
 		ObservableCollection<T> GetApiTableList(bool isDesign, T t, string method, string route);
-		ObservableCollection<T> GetSqlTableList(T t, int? Id);
+		IList<T> GetSqlTableList(T t, int? Id, bool? isDesign);
 	}
 }

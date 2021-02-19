@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:sf="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms" 
+             xmlns:sf="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+             xmlns:local="clr-namespace:RsInvPro.Helpers"
              x:Class="RsInvPro.Views.InventoryView">
 
              
@@ -9,15 +10,24 @@
         <Binding Path="InventoryViewModel" Source="{StaticResource Locator}" />
     </ContentPage.BindingContext>
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:CustomConverter x:Key="gridSelectionChangedEventArgs" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding InventoryHeader}"></Label>
 
             <sf:SfDataGrid
                 x:Name="dataGrid"
-                ColumnSizer="Star"
+                ColumnSizer="Auto"
                 AutoGenerateColumns="False"
                 ScrollingMode="Line"
+                SelectedIndex="{Binding SelectedIndex}"
+                SelectedItem="{Binding SelectedItem}"
+                SelectionMode="Single"
                 ItemsSource="{Binding InventoryList}">
 
                 <sf:SfDataGrid.Columns x:TypeArguments="sf:Columns">
@@ -26,16 +36,34 @@
                         MappingName="PK_Inventory"
                         IsHidden="{Binding IsInventoryIdHidden}"/>
                     <sf:GridTextColumn
-                        HeaderText="Item Name"
-                        MappingName="ItemName" 
+                        HeaderText="Item"
+                        MappingName="Item" 
                        IsHidden="{Binding IsInventoryNameHidden}"/>
                      <sf:GridTextColumn
-                        HeaderText="Item SKU"
-                        MappingName="ItemSku"
+                        HeaderText="SKU"
+                        MappingName="SKU"
                         IsHidden="{Binding IsInventorySkuHidden}"/>
- 
+                    <sf:GridTextColumn 
+                        HeaderText="Location"
+                        MappingName="Location"
+                        IsHidden="{Binding IsInventoryIdHidden}"/>
+                    <sf:GridTextColumn
+                        HeaderText="Purchase Price"
+                        MappingName="PurchasePrice" 
+                       IsHidden="{Binding IsInventoryNameHidden}"/>
+                     <sf:GridTextColumn
+                        HeaderText="Purchase Date"
+                        MappingName="PurchaseDate"
+                        IsHidden="{Binding IsInventorySkuHidden}"/>
                 </sf:SfDataGrid.Columns>
+
+                <sf:SfDataGrid.Behaviors>
+                    <local:CustomBehavior Command="{Binding SelectionCommand}"
+                    Converter="{StaticResource gridSelectionChangedEventArgs}" />
+                </sf:SfDataGrid.Behaviors>
             </sf:SfDataGrid>
+
+            <Button Text="Add Inventory"></Button>
 
         </StackLayout>
     </ContentPage.Content>

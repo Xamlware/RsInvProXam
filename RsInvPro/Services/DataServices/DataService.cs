@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,42 +72,60 @@ namespace RsInvPro.DataServices
             return null;
         }
 
-        public ObservableCollection<T> GetSqlTableList(T t, int? id)
+        public IList<T> GetSqlTableList(T t, int? id, bool? isDesign)
         {
-            //using (var db = new ApplicationDbContext())
-            //{
+            if ((bool)isDesign.IsTrue())
+            {
+                List<Inventory> inventory = new List<Inventory>();
+                inventory.Add(new Inventory(1, "1k SkU", "Item 1", new Department("Item 1 Department"),
+                                           new Category("Item 1 Category"), new SubCategory("Item 1 Subcategory"),
+                                           DateTime.Parse("1/1/2021"),
+                                           (decimal)1.11, (decimal)11.11, new Brand("Brand 1"), "A11"));
 
-            //    //The line below clears and resets the databse.
-            //    db.Database.EnsureDeleted();
+                inventory.Add(new Inventory(2, "2k SkU", "Item 2", new Department("Item 2 Department"),
+                                            new Category("Item 2 Category"), new SubCategory("Item 2 Subcategory"),
+                                            DateTime.Parse("2/2/2021"),
+                                            (decimal)2.22, (decimal)22.22, new Brand("Brand 2"), "A22"));
+                return (IList<T>)inventory;
+                
+            }
+            else
+            {
+                //using (var db = new ApplicationDbContext())
+                //{
 
-            //    // Create the database if it does not exist
-            //    db.Database.EnsureCreated();
+                    //The line below clears and resets the databse.
+                    //db.Database.EnsureDeleted();
 
-
-            //    try
-            //    {
-
-            //        if (t is Inventory)
-            //        {
-            //            ObservableCollection<Inventory> invList;
-            //            invList = db.Inventory.Select(i => i).OrderBy(i => i.Item).ToCollection<Inventory>();
-
-            //        }
-            //        else if (t is InventoryItem)
-            //        {
-            //            ObservableCollection<InventoryItem> invList;
-            //            invList = db.InventoryItem.Where(w => w.FK_Inventory == id).ToCollection<InventoryItem>();
-            //        }
+                    //// Create the database if it does not exist
+                    //db.Database.EnsureCreated();
 
 
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        return null;
-            //    }
+                    try
+                    {
 
-                return null;
-            //}
+                        //if (t is Inventory)
+                        //{
+                        //    ObservableCollection<Inventory> invList;
+                        //    invList = db.Inventory.Select(i => i).OrderBy(i => i.Item).ToCollection<Inventory>();
+
+                        //}
+                        //else if (t is InventoryItem)
+                        //{
+                        //    ObservableCollection<InventoryItem> invList;
+                        //    invList = db.InventoryItem.Where(w => w.FK_Inventory == id).ToCollection<InventoryItem>();
+                        //}
+
+
+                    }
+                    catch (Exception e)
+                    {
+                        return null;
+                    }
+
+                    return null;
+                //}
+            }
         }
     }
 }
