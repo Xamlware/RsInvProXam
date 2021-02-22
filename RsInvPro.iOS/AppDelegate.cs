@@ -1,5 +1,8 @@
 ﻿
 using Foundation;
+using Syncfusion.SfDataGrid.XForms.iOS;
+using Syncfusion.XForms.iOS.DataForm;
+using Syncfusion.XForms.iOS.TabView;
 using UIKit;
 
 namespace RsInvPro.iOS
@@ -23,8 +26,9 @@ namespace RsInvPro.iOS
 
             //SQLitePCL.Batteries_V2.Init();
             global::Xamarin.Forms.Forms.Init();
-            Syncfusion.SfDataGrid.XForms.iOS.SfDataGridRenderer.Init();
-            Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
+            SfDataGridRenderer.Init();
+            SfTabViewRenderer.Init();
+            SfDataFormRenderer.Init();
 
             LoadApplication(new App());
 

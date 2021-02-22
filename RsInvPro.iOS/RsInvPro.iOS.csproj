@@ -140,6 +140,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfTabView">
       <Version>18.4.0.39</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
+      <Version>18.4.0.39</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

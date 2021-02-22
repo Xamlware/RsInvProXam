@@ -18,6 +18,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="18.4.0.39" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="18.4.0.39" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

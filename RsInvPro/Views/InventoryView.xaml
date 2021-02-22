@@ -10,11 +10,11 @@
         <Binding Path="InventoryViewModel" Source="{StaticResource Locator}" />
     </ContentPage.BindingContext>
 
-    <ContentPage.Resources>
+    <!--<ContentPage.Resources>
         <ResourceDictionary>
             <local:CustomConverter x:Key="gridSelectionChangedEventArgs" />
         </ResourceDictionary>
-    </ContentPage.Resources>
+    </ContentPage.Resources>-->
 
     <ContentPage.Content>
         <StackLayout>
@@ -57,13 +57,13 @@
                         IsHidden="{Binding IsInventorySkuHidden}"/>
                 </sf:SfDataGrid.Columns>
 
-                <sf:SfDataGrid.Behaviors>
+                <!--<sf:SfDataGrid.Behaviors>
                     <local:CustomBehavior Command="{Binding SelectionCommand}"
                     Converter="{StaticResource gridSelectionChangedEventArgs}" />
-                </sf:SfDataGrid.Behaviors>
+                </sf:SfDataGrid.Behaviors>-->
             </sf:SfDataGrid>
 
-            <Button Text="Add Inventory"></Button>
+            <Button Text="Add Inventory" Command="{Binding InventoryAddCommand}"></Button>
 
         </StackLayout>
     </ContentPage.Content>

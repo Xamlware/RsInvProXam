@@ -76,56 +76,77 @@ namespace RsInvPro.DataServices
         {
             if ((bool)isDesign.IsTrue())
             {
-                List<Inventory> inventory = new List<Inventory>();
-                inventory.Add(new Inventory(1, "1k SkU", "Item 1", new Department("Item 1 Department"),
-                                           new Category("Item 1 Category"), new SubCategory("Item 1 Subcategory"),
-                                           DateTime.Parse("1/1/2021"),
-                                           (decimal)1.11, (decimal)11.11, new Brand("Brand 1"), "A11"));
+                if (t is Inventory)
+                {
+                    return (IList<T>)this.getInventoryList();
+                }
 
-                inventory.Add(new Inventory(2, "2k SkU", "Item 2", new Department("Item 2 Department"),
-                                            new Category("Item 2 Category"), new SubCategory("Item 2 Subcategory"),
-                                            DateTime.Parse("2/2/2021"),
-                                            (decimal)2.22, (decimal)22.22, new Brand("Brand 2"), "A22"));
-                return (IList<T>)inventory;
-                
+                return null;
             }
             else
             {
                 //using (var db = new ApplicationDbContext())
                 //{
 
-                    //The line below clears and resets the databse.
-                    //db.Database.EnsureDeleted();
+                //The line below clears and resets the databse.
+                //db.Database.EnsureDeleted();
 
-                    //// Create the database if it does not exist
-                    //db.Database.EnsureCreated();
-
-
-                    try
-                    {
-
-                        //if (t is Inventory)
-                        //{
-                        //    ObservableCollection<Inventory> invList;
-                        //    invList = db.Inventory.Select(i => i).OrderBy(i => i.Item).ToCollection<Inventory>();
-
-                        //}
-                        //else if (t is InventoryItem)
-                        //{
-                        //    ObservableCollection<InventoryItem> invList;
-                        //    invList = db.InventoryItem.Where(w => w.FK_Inventory == id).ToCollection<InventoryItem>();
-                        //}
+                //// Create the database if it does not exist
+                //db.Database.EnsureCreated();
 
 
-                    }
-                    catch (Exception e)
-                    {
-                        return null;
-                    }
+                try
+                {
 
+                    //if (t is Inventory)
+                    //{
+                    //    ObservableCollection<Inventory> invList;
+                    //    invList = db.Inventory.Select(i => i).OrderBy(i => i.Item).ToCollection<Inventory>();
+
+                    //}
+                    //else if (t is InventoryItem)
+                    //{
+                    //    ObservableCollection<InventoryItem> invList;
+                    //    invList = db.InventoryItem.Where(w => w.FK_Inventory == id).ToCollection<InventoryItem>();
+                    //}
+
+
+                }
+                catch (Exception e)
+                {
                     return null;
+                }
+
+                return null;
                 //}
             }
+        }
+
+        public T GetSqlTableRow(T t, int id, bool isDesign)
+        {
+            if (t is Inventory)
+            {
+                var inv = getInventoryList().SingleOrDefault(s => s.PK_Inventory == id);
+                return (T)(object)inv;
+
+            }
+
+            return default(T);
+        }
+
+        private List<Inventory> getInventoryList()
+        {
+            List<Inventory> inventory = new List<Inventory>();
+            inventory.Add(new Inventory(1, "1k SkU", "Item 1", new Department("Item 1 Department"),
+                                                   new Category("Item 1 Category"), new SubCategory("Item 1 Subcategory"),
+                                                   DateTime.Parse("1/1/2021"),
+                                                   (decimal)1.11, (decimal)11.11, new Brand("Brand 1"), "A11"));
+
+            inventory.Add(new Inventory(2, "2k SkU", "Item 2", new Department("Item 2 Department"),
+                                        new Category("Item 2 Category"), new SubCategory("Item 2 Subcategory"),
+                                        DateTime.Parse("2/2/2021"),
+                                        (decimal)2.22, (decimal)22.22, new Brand("Brand 2"), "A22"));
+            return inventory;
         }
     }
 }

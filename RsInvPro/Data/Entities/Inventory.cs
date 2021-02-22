@@ -1,15 +1,19 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace RsInvPro.Data.Entities
 {
     public class Inventory
     {
         //[Key]
+        [Display(Name = "Id")]
         public int PK_Inventory { get; set; }
 
         public string SKU { get; set; }
 
         public string Item { get; set; }
 
+        [Display(Name = "Dept", Prompt="Enter Department Name")]         
         public Department Department { get; set; }
 
         public Category Category { get; set; }

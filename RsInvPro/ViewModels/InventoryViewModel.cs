@@ -3,11 +3,13 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Newtonsoft.Json;
 using RsInvPro.Data.Entities;
 using RsInvPro.DataServices;
 using RsInvPro.Helpers;
+using RsInvPro.Services;
 using RsInvPro.Services.DataServices;
 using Syncfusion.SfDataGrid.XForms;
 
@@ -21,6 +23,13 @@ namespace RsInvPro.ViewModels
 
 		#region Commands
 
+			private RelayCommand inventoryAddCommand;
+			public RelayCommand InventoryAddCommand
+			{
+				get { return inventoryAddCommand; }
+				protected set { inventoryAddCommand = value; }
+			}
+	
 			private RelayCommand<GridSelectionChangedEventArgs> selectionCommand;
 			public RelayCommand<GridSelectionChangedEventArgs> SelectionCommand
 			{
@@ -142,22 +151,45 @@ namespace RsInvPro.ViewModels
 		#endregion
 
 
-
-
-		public InventoryViewModel(IDataService<Inventory> ds)
+		public InventoryViewModel(INavigationService navService, IDataService<Inventory> ds)
 		{
+
 			_ds = ds;
+			_navService = navService;
+
 			this.InventoryList = this.GetInventoryList();
 			this.InventoryHeader = "Hello from our inventory page";
 			this.IsInventoryIdHidden = false;
 			this.IsInventoryNameidden = false;
 			this.IsInventorySkuHidden = false;
 
-			SelectionCommand = new RelayCommand<GridSelectionChangedEventArgs>(i => ExecuteSelectionCommnd(i));
 
+			this.InventoryAddCommand = new RelayCommand(
+				 () => ExecuteInventoryAddCommnd(),
+				 () => CanExecuteInventoryAddCommnd());
+
+			SelectionCommand = new RelayCommand<GridSelectionChangedEventArgs>(i => ExecuteSelectionCommnd(i));
 		}
 
-        private void ExecuteSelectionCommnd(GridSelectionChangedEventArgs e)
+
+
+		private Inventory GetInventoryRecord()
+		{
+			//return _ds.GetTableList(IsDesignModeEnabled, inventory, "Get", "api/district/");
+			return _ds.GetSqlTableRow(new Inventory(), 2, true);
+		}
+
+		private bool CanExecuteInventoryAddCommnd()
+		{
+			return true;
+		}
+
+		private void ExecuteInventoryAddCommnd()
+		{
+            _navService.NavigateTo(ViewModelLocator.InventoryAddPage);
+		}
+
+		private void ExecuteSelectionCommnd(GridSelectionChangedEventArgs e)
         {
 			this.SelectedItem = (ObservableCollection<Inventory>) e.AddedItems;
 
@@ -167,7 +199,9 @@ namespace RsInvPro.ViewModels
 		{
 
 			//return _ds.GetTableList(IsDesignModeEnabled, inventory, "Get", "api/district/");
+			//var inv = _ds.GetSqlTableRow(new Inventory(), 2, true);
 			return _ds.GetSqlTableList(new Inventory(), null, true).ToCollection();
+
 
 		}
 	}
