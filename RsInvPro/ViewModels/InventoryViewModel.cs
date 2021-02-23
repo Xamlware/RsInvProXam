@@ -29,8 +29,15 @@ namespace RsInvPro.ViewModels
 				get { return inventoryAddCommand; }
 				protected set { inventoryAddCommand = value; }
 			}
-	
-			private RelayCommand<GridSelectionChangedEventArgs> selectionCommand;
+
+		private RelayCommand<Inventory> inventoryEditCommand;
+		public RelayCommand<Inventory> InventoryEditCommand
+		{
+			get { return inventoryEditCommand; }
+			protected set { inventoryEditCommand = value; }
+		}
+
+		private RelayCommand<GridSelectionChangedEventArgs> selectionCommand;
 			public RelayCommand<GridSelectionChangedEventArgs> SelectionCommand
 			{
 				get { return selectionCommand; }
@@ -165,10 +172,15 @@ namespace RsInvPro.ViewModels
 
 
 			this.InventoryAddCommand = new RelayCommand(
-				 () => ExecuteInventoryAddCommnd(),
-				 () => CanExecuteInventoryAddCommnd());
+				() => ExecuteInventoryAddCommnd(),
+				() => CanExecuteInventoryAddCommnd());
 
-			SelectionCommand = new RelayCommand<GridSelectionChangedEventArgs>(i => ExecuteSelectionCommnd(i));
+			this.InventoryEditCommand = new RelayCommand<Inventory>(
+				i => ExecuteInventoryEditCommnd(i),
+				i => CanExecuteInventoryEditCommnd());
+
+			SelectionCommand = new RelayCommand<GridSelectionChangedEventArgs>(i => ExecuteSelectionCommnd(i),
+				i=>CanExecuteSelectionCommnd());
 		}
 
 
@@ -186,7 +198,24 @@ namespace RsInvPro.ViewModels
 
 		private void ExecuteInventoryAddCommnd()
 		{
-            _navService.NavigateTo(ViewModelLocator.InventoryAddPage);
+			var inv = new Inventory();
+            _navService.NavigateTo(ViewModelLocator.InventoryEditPage, inv);
+		}
+
+		private bool CanExecuteInventoryEditCommnd()
+		{
+			return true;
+		}
+
+		private void ExecuteInventoryEditCommnd(Inventory i)
+		{
+			_navService.NavigateTo(ViewModelLocator.InventoryEditPage, this.SelectedItem);
+		}
+
+
+		private bool CanExecuteSelectionCommnd()
+		{
+			return true;
 		}
 
 		private void ExecuteSelectionCommnd(GridSelectionChangedEventArgs e)

@@ -12,7 +12,7 @@ namespace RsInvPro.Services
         private const bool ForceDesignData = false;
         public const string MainPage = "MainPage";
         public const string InventoryPage = "InventoryPage";
-        public const string InventoryAddPage = "InventoryAddPage";
+        public const string InventoryEditPage = "InventoryEditPage";
         public const string InventoryColumnPage = "InventoryColumnPage";
 
 
@@ -21,7 +21,7 @@ namespace RsInvPro.Services
         {
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<InventoryViewModel>();
-            SimpleIoc.Default.Register<InventoryAddViewModel>();
+            SimpleIoc.Default.Register<InventoryEditViewModel>();
             SimpleIoc.Default.Register<InventoryColumnViewModel>();
 
             SimpleIoc.Default.Register<IDataService<Inventory>, DataService<Inventory>>();
@@ -79,15 +79,15 @@ namespace RsInvPro.Services
         [SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public InventoryAddViewModel InventoryAddViewModel
+        public InventoryEditViewModel InventoryEditViewModel
         {
             get
             {
-                if (!SimpleIoc.Default.IsRegistered<InventoryAddViewModel>())
+                if (!SimpleIoc.Default.IsRegistered<InventoryEditViewModel>())
                 {
-                    SimpleIoc.Default.Register<InventoryAddViewModel>();
+                    SimpleIoc.Default.Register<InventoryEditViewModel>();
                 }
-                return SimpleIoc.Default.GetInstance<InventoryAddViewModel>();
+                return SimpleIoc.Default.GetInstance<InventoryEditViewModel>();
             }
         }
     }

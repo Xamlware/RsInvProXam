@@ -33,7 +33,7 @@ namespace RsInvPro
             var nav = new NavigationService();
             nav.Configure(ViewModelLocator.MainPage, typeof(MainView));
             nav.Configure(ViewModelLocator.InventoryPage, typeof(InventoryView));
-            nav.Configure(ViewModelLocator.InventoryAddPage, typeof(InventoryAddView));
+            nav.Configure(ViewModelLocator.InventoryEditPage, typeof(InventoryEditView));
             nav.Configure(ViewModelLocator.InventoryColumnPage, typeof(InventoryColumnView));
             SimpleIoc.Default.Register<INavigationService>(() => nav);
 

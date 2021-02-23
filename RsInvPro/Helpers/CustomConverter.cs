@@ -5,7 +5,7 @@ using Xamarin.Forms;
 namespace RsInvPro.Helpers
 {
 
-    public class GridConverter : IValueConverter
+    public class CustomConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
