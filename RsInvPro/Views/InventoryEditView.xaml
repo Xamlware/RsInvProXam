@@ -5,7 +5,7 @@
              x:Class="RsInvPro.ViewModels.InventoryEditView">
 
     <ContentPage.BindingContext>
-        <Binding Path="InventoryAddViewModel" Source="{StaticResource Locator}" />
+        <Binding Path="InventoryEditViewModel" Source="{StaticResource Locator}" />
     </ContentPage.BindingContext>
 
     <ContentPage.Content>

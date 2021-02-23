@@ -18,11 +18,7 @@ namespace RsInvPro.Views
 
             InitializeComponent();
 
-
             dataForm.AutoGeneratingDataFormItem += DataForm_AutoGeneratingDataFormItem;
-            //this.BindingContext = vm;
-
-
         }
 
 
@@ -30,6 +26,13 @@ namespace RsInvPro.Views
         {
             if (e.DataFormItem.Name == "PK_Inventory")
                 e.DataFormItem.IsReadOnly = true;
+        }
+
+        void dataForm_AutoGeneratingDataFormItem_1(System.Object sender, Syncfusion.XForms.DataForm.AutoGeneratingDataFormItemEventArgs e)
+        {
+            if (e.DataFormItem.Name == "PK_Inventory")
+                e.DataFormItem.IsReadOnly = true;
+
         }
     }
 }

@@ -12,7 +12,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <local:CustomConverter x:Key="gridSelectionChangedEventArgs" />
+            <local:CustomGridConverter x:Key="gridSelectionChangedEventArgs" />
             
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -59,7 +59,7 @@
                 </sf:SfDataGrid.Columns>
 
                 <sf:SfDataGrid.Behaviors>
-                    <local:CustomBehavior Command="{Binding SelectionCommand}"
+                    <local:CustomGridBehavior Command="{Binding SelectionCommand}"
                     Converter="{StaticResource gridSelectionChangedEventArgs}" />
                 </sf:SfDataGrid.Behaviors>
             </sf:SfDataGrid>

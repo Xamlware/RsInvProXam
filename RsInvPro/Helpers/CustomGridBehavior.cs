@@ -5,10 +5,10 @@ using Xamarin.Forms;
 
 namespace RsInvPro.Helpers
 {
-    public class CustomBehavior : Xamarin.Forms.Behavior<SfDataGrid>
+    public class CustomGridBehavior : Xamarin.Forms.Behavior<SfDataGrid>
     {
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create("Command", typeof(ICommand), typeof(CustomBehavior), null);
-        public static readonly BindableProperty InputConverterProperty = BindableProperty.Create("Converter", typeof(IValueConverter), typeof(CustomBehavior), null);
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create("Command", typeof(ICommand), typeof(CustomGridBehavior), null);
+        public static readonly BindableProperty InputConverterProperty = BindableProperty.Create("Converter", typeof(IValueConverter), typeof(CustomGridBehavior), null);
 
         public ICommand Command
         {
