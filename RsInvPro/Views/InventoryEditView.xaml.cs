@@ -9,7 +9,7 @@ namespace RsInvPro.Views
 {
     public partial class InventoryEditView : ContentPage
     {
-        InventoryAddViewModel vm = SimpleIoc.Default.GetInstance<InventoryAddViewModel>();
+        InventoryEditViewModel vm = SimpleIoc.Default.GetInstance<InventoryEditViewModel>();
 
 
         public InventoryEditView()
