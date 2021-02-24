@@ -2,8 +2,10 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using RsInvPro.Data.Entities;
+using RsInvPro.Messages;
 using RsInvPro.Services.DataServices;
 
 namespace RsInvPro.ViewModels
@@ -20,9 +22,21 @@ namespace RsInvPro.ViewModels
             _navService = navService;
             _ds = ds;
             _invVm = SimpleIoc.Default.GetInstance<InventoryViewModel>();
+            this.InventoryRow = _invVm.SelectedItem;
 
-            this.InventoryRow = _ds.GetSqlTableRow(new Inventory(), 2, true);
+            //Messenger.Default.Send(new GetSelectedItemMessage());
+            //Messenger.Default.Register<SelectedItemResponseMessage>(this, HandleSelectedItemResponseMessage);
+
+
+            //this.InventoryRow = _ds.GetSqlTableRow(new Inventory(), 2, true);
+
         }
+
+        private void HandleSelectedItemResponseMessage(SelectedItemResponseMessage msg)
+        {
+            this.InventoryRow = (Inventory)msg.Item;
+        }
+
 
         #region Commands        #region Commands
 

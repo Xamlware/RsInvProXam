@@ -1,9 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 using RsInvPro.Data.Entities;
 using RsInvPro.Helpers;
+using RsInvPro.Messages;
 using RsInvPro.Services;
 using RsInvPro.Services.DataServices;
 using Syncfusion.SfDataGrid.XForms;
@@ -21,9 +25,12 @@ namespace RsInvPro.ViewModels
 
 			_ds = ds;
 			_navService = navService;
+			Messenger.Default.Register<GetSelectedItemMessage>(this, HandleGetSelectedItemMessage);
+			
 
 			this.InventoryList = this.GetInventoryList();
 			this.InventoryHeader = "Hello from our inventory page";
+			this.SelectedIndex = 0;
 			this.IsInventoryIdHidden = false;
 			this.IsInventoryNameidden = false;
 			this.IsInventorySkuHidden = false;
@@ -41,6 +48,20 @@ namespace RsInvPro.ViewModels
 				i=>CanExecuteSelectionCommnd());
 		}
 
+		private void HandleGetSelectedItemMessage(GetSelectedItemMessage obj)
+		{
+
+			Messenger.Default.Send(new SelectedItemResponseMessage { Item = this.SelectedItem });
+        }
+
+
+		private void SetInventoryRow(Inventory item)
+        {
+			InventoryEditViewModel ievm = SimpleIoc.Default.GetInstance <InventoryEditViewModel>();
+			ievm.InventoryRow = item;
+        }
+
+
 		private Inventory GetInventoryRecord()
 		{
 			//return _ds.GetTableList(IsDesignModeEnabled, inventory, "Get", "api/district/");
@@ -54,13 +75,12 @@ namespace RsInvPro.ViewModels
 
 		private void ExecuteInventoryAddCommnd()
 		{
-			var inv = new Inventory();
-            //_navService.NavigateTo(ViewModelLocator.InventoryEditPage, inv);
+			_navService.NavigateTo(ViewModelLocator.InventoryEditPage);
 		}
 
 		private bool CanExecuteInventoryEditCommnd()
 		{
-			return true;
+			return this.SelectedItem != null;
 		}
 
 		private void ExecuteInventoryEditCommnd()
@@ -76,8 +96,7 @@ namespace RsInvPro.ViewModels
 
 		private void ExecuteSelectionCommnd(GridSelectionChangedEventArgs e)
         {
-			this.SelectedItem = (ObservableCollection<Inventory>) e.AddedItems;
-
+			this.SelectedItem = (Inventory) e.AddedItems;
 		}
 
 		public ObservableCollection<Inventory> GetInventoryList()
@@ -100,18 +119,18 @@ namespace RsInvPro.ViewModels
 			protected set { inventoryAddCommand = value; }
 		}
 
-		private RelayCommand inventoryEditCommand;
+		private RelayCommand _inventoryEditCommand;
 		public RelayCommand InventoryEditCommand
 		{
-			get { return inventoryEditCommand; }
-			protected set { inventoryEditCommand = value; }
+			get { return _inventoryEditCommand; }
+			protected set { _inventoryEditCommand = value; }
 		}
 
-		private RelayCommand<GridSelectionChangedEventArgs> selectionCommand;
+		private RelayCommand<GridSelectionChangedEventArgs> _selectionCommand;
 		public RelayCommand<GridSelectionChangedEventArgs> SelectionCommand
 		{
-			get { return selectionCommand; }
-			protected set { selectionCommand = value; }
+			get { return _selectionCommand; }
+			protected set { _selectionCommand = value; }
 		}
 
 		#endregion
@@ -149,8 +168,8 @@ namespace RsInvPro.ViewModels
 		}
 
 		public const string SelectedItemProperty = "SelectedItemProperty";
-		private ObservableCollection<Inventory> _selectedItem;
-		public ObservableCollection<Inventory> SelectedItem
+		private Inventory _selectedItem ;
+		public Inventory SelectedItem
 		{
 			get
 			{
@@ -160,12 +179,15 @@ namespace RsInvPro.ViewModels
 			{
 				_selectedItem = value;
 				this.RaisePropertyChanged(SelectedItemProperty);
+				this.InventoryEditCommand.RaiseCanExecuteChanged();
+				this.SetInventoryRow(value);
+
 			}
 		}
 
 		public const string SelectedIndexProperty = "SelectedIndexProperty";
-		private ObservableCollection<Inventory> _selectedIndex;
-		public ObservableCollection<Inventory> SelectedIndex
+		private int _selectedIndex;
+		public int SelectedIndex
 		{
 			get
 			{
