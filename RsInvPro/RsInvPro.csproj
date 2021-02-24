@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
   </PropertyGroup>
 
@@ -19,6 +19,8 @@
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="18.4.0.39" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

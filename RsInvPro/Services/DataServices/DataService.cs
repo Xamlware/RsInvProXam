@@ -137,15 +137,14 @@ namespace RsInvPro.DataServices
         private List<Inventory> getInventoryList()
         {
             List<Inventory> inventory = new List<Inventory>();
-            inventory.Add(new Inventory(1, "1k SkU", "Item 1", new Department("Item 1 Department"),
-                                                   new Category("Item 1 Category"), new SubCategory("Item 1 Subcategory"),
-                                                   DateTime.Parse("1/1/2021"),
-                                                   (decimal)1.11, (decimal)11.11, new Brand("Brand 1"), "A11"));
+            inventory.Add(new Inventory(1, "1k SkU", "Item 1", 1, 1, 1,
+                                DateTime.Parse("1/1/2021"),
+                                (decimal)1.11, (decimal)11.11, 1, "A11"));
 
-            inventory.Add(new Inventory(2, "2k SkU", "Item 2", new Department("Item 2 Department"),
-                                        new Category("Item 2 Category"), new SubCategory("Item 2 Subcategory"),
-                                        DateTime.Parse("2/2/2021"),
-                                        (decimal)2.22, (decimal)22.22, new Brand("Brand 2"), "A22"));
+            inventory.Add(new Inventory(2, "2k SkU", "Item 2", 2, 2, 2,
+                                DateTime.Parse("2/2/2022"),
+                                (decimal)2.22, (decimal)22.22, 2, "A22"));
+
             return inventory;
         }
     }

@@ -25,7 +25,7 @@ namespace RsInvPro.ViewModels
 
 			_ds = ds;
 			_navService = navService;
-			Messenger.Default.Register<GetSelectedItemMessage>(this, HandleGetSelectedItemMessage);
+			//Messenger.Default.Register<GetSelectedItemMessage>(this, HandleGetSelectedItemMessage);
 			
 
 			this.InventoryList = this.GetInventoryList();
@@ -51,7 +51,7 @@ namespace RsInvPro.ViewModels
 		private void HandleGetSelectedItemMessage(GetSelectedItemMessage obj)
 		{
 
-			Messenger.Default.Send(new SelectedItemResponseMessage { Item = this.SelectedItem });
+			//Messenger.Default.Send(new SelectedItemResponseMessage { Item = this.SelectedItem });
         }
 
 
