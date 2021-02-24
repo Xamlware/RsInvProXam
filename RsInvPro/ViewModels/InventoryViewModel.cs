@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
-using Newtonsoft.Json;
 using RsInvPro.Data.Entities;
-using RsInvPro.DataServices;
 using RsInvPro.Helpers;
 using RsInvPro.Services;
 using RsInvPro.Services.DataServices;
@@ -15,34 +10,109 @@ using Syncfusion.SfDataGrid.XForms;
 
 namespace RsInvPro.ViewModels
 {
-	public class InventoryViewModel : ViewModelBase
+    public class InventoryViewModel : ViewModelBase
 	{
 		private readonly INavigationService _navService;
 		private readonly IDataService<Inventory> _ds;
 		public static bool IsDesignModeEnabled { get; }
 
+		public InventoryViewModel(INavigationService navService, IDataService<Inventory> ds)
+		{
+
+			_ds = ds;
+			_navService = navService;
+
+			this.InventoryList = this.GetInventoryList();
+			this.InventoryHeader = "Hello from our inventory page";
+			this.IsInventoryIdHidden = false;
+			this.IsInventoryNameidden = false;
+			this.IsInventorySkuHidden = false;
+
+
+			this.InventoryAddCommand = new RelayCommand(
+				() => ExecuteInventoryAddCommnd(),
+				() => CanExecuteInventoryAddCommnd());
+
+			this.InventoryEditCommand = new RelayCommand(
+				() => ExecuteInventoryEditCommnd(),
+				() => CanExecuteInventoryEditCommnd());
+
+			SelectionCommand = new RelayCommand<GridSelectionChangedEventArgs>(i => ExecuteSelectionCommnd(i),
+				i=>CanExecuteSelectionCommnd());
+		}
+
+		private Inventory GetInventoryRecord()
+		{
+			//return _ds.GetTableList(IsDesignModeEnabled, inventory, "Get", "api/district/");
+			return _ds.GetSqlTableRow(new Inventory(), 2, true);
+		}
+
+		private bool CanExecuteInventoryAddCommnd()
+		{
+			return true;
+		}
+
+		private void ExecuteInventoryAddCommnd()
+		{
+			var inv = new Inventory();
+            //_navService.NavigateTo(ViewModelLocator.InventoryEditPage, inv);
+		}
+
+		private bool CanExecuteInventoryEditCommnd()
+		{
+			return true;
+		}
+
+		private void ExecuteInventoryEditCommnd()
+		{
+			_navService.NavigateTo(ViewModelLocator.InventoryEditPage);
+		}
+
+
+		private bool CanExecuteSelectionCommnd()
+		{
+			return true;
+		}
+
+		private void ExecuteSelectionCommnd(GridSelectionChangedEventArgs e)
+        {
+			this.SelectedItem = (ObservableCollection<Inventory>) e.AddedItems;
+
+		}
+
+		public ObservableCollection<Inventory> GetInventoryList()
+		{
+
+			//return _ds.GetTableList(IsDesignModeEnabled, inventory, "Get", "api/district/");
+			//var inv = _ds.GetSqlTableRow(new Inventory(), 2, true);
+			return _ds.GetSqlTableList(new Inventory(), null, true).ToCollection();
+
+
+		}
+
+
 		#region Commands
 
-			private RelayCommand inventoryAddCommand;
-			public RelayCommand InventoryAddCommand
-			{
-				get { return inventoryAddCommand; }
-				protected set { inventoryAddCommand = value; }
-			}
+		private RelayCommand inventoryAddCommand;
+		public RelayCommand InventoryAddCommand
+		{
+			get { return inventoryAddCommand; }
+			protected set { inventoryAddCommand = value; }
+		}
 
-		private RelayCommand<Inventory> inventoryEditCommand;
-		public RelayCommand<Inventory> InventoryEditCommand
+		private RelayCommand inventoryEditCommand;
+		public RelayCommand InventoryEditCommand
 		{
 			get { return inventoryEditCommand; }
 			protected set { inventoryEditCommand = value; }
 		}
 
 		private RelayCommand<GridSelectionChangedEventArgs> selectionCommand;
-			public RelayCommand<GridSelectionChangedEventArgs> SelectionCommand
-			{
-				get { return selectionCommand; }
-				protected set { selectionCommand = value; }
-			}
+		public RelayCommand<GridSelectionChangedEventArgs> SelectionCommand
+		{
+			get { return selectionCommand; }
+			protected set { selectionCommand = value; }
+		}
 
 		#endregion
 
@@ -158,82 +228,10 @@ namespace RsInvPro.ViewModels
 		#endregion
 
 
-		public InventoryViewModel(INavigationService navService, IDataService<Inventory> ds)
-		{
 
-			_ds = ds;
-			_navService = navService;
-
-			this.InventoryList = this.GetInventoryList();
-			this.InventoryHeader = "Hello from our inventory page";
-			this.IsInventoryIdHidden = false;
-			this.IsInventoryNameidden = false;
-			this.IsInventorySkuHidden = false;
-
-
-			this.InventoryAddCommand = new RelayCommand(
-				() => ExecuteInventoryAddCommnd(),
-				() => CanExecuteInventoryAddCommnd());
-
-			this.InventoryEditCommand = new RelayCommand<Inventory>(
-				i => ExecuteInventoryEditCommnd(i),
-				i => CanExecuteInventoryEditCommnd());
-
-			SelectionCommand = new RelayCommand<GridSelectionChangedEventArgs>(i => ExecuteSelectionCommnd(i),
-				i=>CanExecuteSelectionCommnd());
-		}
-
-
-
-		private Inventory GetInventoryRecord()
-		{
-			//return _ds.GetTableList(IsDesignModeEnabled, inventory, "Get", "api/district/");
-			return _ds.GetSqlTableRow(new Inventory(), 2, true);
-		}
-
-		private bool CanExecuteInventoryAddCommnd()
-		{
-			return true;
-		}
-
-		private void ExecuteInventoryAddCommnd()
-		{
-			var inv = new Inventory();
-            _navService.NavigateTo(ViewModelLocator.InventoryEditPage, inv);
-		}
-
-		private bool CanExecuteInventoryEditCommnd()
-		{
-			return true;
-		}
-
-		private void ExecuteInventoryEditCommnd(Inventory i)
-		{
-			_navService.NavigateTo(ViewModelLocator.InventoryEditPage, this.SelectedItem);
-		}
-
-
-		private bool CanExecuteSelectionCommnd()
-		{
-			return true;
-		}
-
-		private void ExecuteSelectionCommnd(GridSelectionChangedEventArgs e)
-        {
-			this.SelectedItem = (ObservableCollection<Inventory>) e.AddedItems;
-
-		}
-
-		public ObservableCollection<Inventory> GetInventoryList()
-		{
-
-			//return _ds.GetTableList(IsDesignModeEnabled, inventory, "Get", "api/district/");
-			//var inv = _ds.GetSqlTableRow(new Inventory(), 2, true);
-			return _ds.GetSqlTableList(new Inventory(), null, true).ToCollection();
-
-
-		}
 	}
+
+
 }
 
 

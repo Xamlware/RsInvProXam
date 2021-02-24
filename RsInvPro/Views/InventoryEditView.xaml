@@ -2,15 +2,44 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:df="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
-             x:Class="RsInvPro.ViewModels.InventoryEditView">
+             x:Class="RsInvPro.Views.InventoryEditView">
 
-    <ContentPage.BindingContext>
+  <ContentPage.BindingContext>
         <Binding Path="InventoryEditViewModel" Source="{StaticResource Locator}" />
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <df:SfDataForm x:Name="dataForm"
-                       DataObject="{Binding InventoryRow, Mode=TwoWay}"
-                       AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".5*" />
+                <ColumnDefinition Width=".5*" />
+            </Grid.ColumnDefinitions>
+           
+           
+            <Button Grid.Row="0" Grid.Column="1" Text="Save" Command="{Binding SaveChangesCommand}"></Button>
+            <Button Grid.Row="0" Grid.Column="2" Text="Cancel" Command="{Binding CancelChangesCommand}"></Button>
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                x:Name="stackLayout"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+
+                <df:SfDataForm
+                    x:Name="dataForm"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    DataObject="{Binding InventoryRow}" />
+            </StackLayout>
+ 
+
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
+

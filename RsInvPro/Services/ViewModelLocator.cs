@@ -28,7 +28,6 @@ namespace RsInvPro.Services
             SimpleIoc.Default.Register<IDataService<InventoryItem>, DataService<InventoryItem>>();
             SimpleIoc.Default.Register<IDataService<InventoryEbay>, DataService<InventoryEbay>>();
             SimpleIoc.Default.Register<IDataService<InventoryPoshmark>, DataService<InventoryPoshmark>>();
-
         }
 
         [SuppressMessage("Microsoft.Performance",

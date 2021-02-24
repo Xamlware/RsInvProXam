@@ -1,5 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using RsInvPro.Data.Entities;
 using RsInvPro.Services.DataServices;
@@ -10,11 +12,33 @@ namespace RsInvPro.ViewModels
     {
         private readonly INavigationService _navService;
         private readonly IDataService<Inventory> _ds;
+        private readonly InventoryViewModel _invVm;
 
+        public InventoryEditViewModel(INavigationService navService, IDataService<Inventory> ds)
+        {
 
+            _navService = navService;
+            _ds = ds;
+            _invVm = SimpleIoc.Default.GetInstance<InventoryViewModel>();
 
-        #region Commands
+            this.InventoryRow = _ds.GetSqlTableRow(new Inventory(), 2, true);
+        }
 
+        #region Commands        #region Commands
+
+        private RelayCommand _saveChangesCommand;
+        public RelayCommand SaveChangesCommand
+        {
+            get { return _saveChangesCommand; }
+            protected set { _saveChangesCommand = value; }
+        }
+
+        private RelayCommand _cancelChangesCommand;
+        public RelayCommand CancelChangesCommand
+        {
+            get { return _cancelChangesCommand; }
+            protected set { _cancelChangesCommand = value; }
+        }
         #endregion
 
         #region Properties
@@ -32,19 +56,8 @@ namespace RsInvPro.ViewModels
                 this.RaisePropertyChanged(InventoryRowProperty);
             }
         }
+
         #endregion
 
-        public InventoryEditViewModel(INavigationService navService, IDataService<Inventory> ds)
-        {
-            _navService = navService;
-            _ds = ds;
-
-            var type = new Inventory();
-            this.InventoryRow = _ds.GetSqlTableRow(type, 2, true);
-
-
-
-
-        }
     }
 }

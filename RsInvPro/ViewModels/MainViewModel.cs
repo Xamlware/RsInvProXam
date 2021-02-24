@@ -1,8 +1,11 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using RsInvPro.Messages;
 using RsInvPro.Services;
+using RsInvPro.Services.DataServices;
 
 namespace RsInvPro.ViewModels
 {
@@ -29,11 +32,12 @@ namespace RsInvPro.ViewModels
         }
 
         public string HelloWorldString { get; private set; } = "Hello from Xamarin Forms";
-
+        IDataService<InventoryViewModel> ds;
 
 
         public MainViewModel(INavigationService navService)
         {
+            Messenger.Default.Register<TestMessage>(this, HandleTestMessage);
             InventoryPageCommand = new RelayCommand(
                () => ExecuteInventoryPageCommnd(),
                () => CanExecuteInventoryPageCommnd());
@@ -52,6 +56,11 @@ namespace RsInvPro.ViewModels
         //                      () => CanExecuteInventoryPageCommnd()));
         //    }
         //}
+
+        private void HandleTestMessage(TestMessage msg)
+        {
+          
+        }
 
         private bool CanExecuteInventoryPageCommnd()
         {
