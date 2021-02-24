@@ -21,8 +21,8 @@
             </Grid.ColumnDefinitions>
            
            
-            <Button Grid.Row="0" Grid.Column="1" Text="Save" Command="{Binding SaveChangesCommand}"></Button>
-            <Button Grid.Row="0" Grid.Column="2" Text="Cancel" Command="{Binding CancelChangesCommand}"></Button>
+            <Button Grid.Row="0" Grid.Column="0" Text="Save" Command="{Binding SaveChangesCommand}"></Button>
+            <Button Grid.Row="0" Grid.Column="1" Text="Cancel" Command="{Binding CancelChangesCommand}"></Button>
             <StackLayout
                 Grid.Row="1"
                 Grid.Column="0"
