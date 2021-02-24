@@ -37,6 +37,7 @@
                     HorizontalOptions="FillAndExpand"
                     LabelWidth="1"
                     EditorWidth="2"
+                    AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
                     DataObject="{Binding InventoryRow}" />
             </StackLayout>
  
